@@ -4,7 +4,7 @@
 ############################ CHANGE THE FOLLOWING ##############################
 ################################################################################
 BSD_ARCH="amd64"
-BSD_VERSION="13.1"
+BSD_VERSION="13.2"
 # Possible distributions
 # base-dbg.txz kernel-dbg.txz lib32-dbg.txz lib32.txz ports.txz src.txz tests.txz
 DISTRIBUTIONS="base.txz kernel.txz"; export DISTRIBUTIONS
@@ -12,9 +12,9 @@ HOSTNAME="FreeBSD"
 PASSWORD="FreeBSD"
 # These ports are  installed by Vultr. If you want to add more just keep on adding
 PKGNG="ca_root_nss libnghttp2 libssh2 python wget"
-SIZE_GB=4
-SIZE_SWAP=0         # Change size in GB. o to disable
-SSH_KEY="<INSERT YOUR SSH KEY>"
+SIZE_GB=10
+SIZE_SWAP=2         # Change size in GB. o to disable
+#SSH_KEY="<INSERT YOUR SSH KEY>"
 TIMEZONE=UTC
 ################################################################################
 ########################  DO NOT CHANGE THE FOLLOWING ##########################
@@ -93,9 +93,9 @@ cp /mnt/${ZPOOL_DIR}usr/share/zoneinfo/${TIMEZONE} /mnt/${ZPOOL_DIR}etc/localtim
 
 # Setup SSH
 ${SYSRC} sshd_enable="YES"
-${SYSRC} sshd_flags="-o PermitRootLogin=without-password"
-mkdir -p /mnt/${ZPOOL_DIR}/root/.ssh
-echo "${SSH_KEY}" > /mnt/${ZPOOL_DIR}/root/.ssh/authorized_keys
+#${SYSRC} sshd_flags="-o PermitRootLogin=without-password"
+#mkdir -p /mnt/${ZPOOL_DIR}/root/.ssh
+#echo "${SSH_KEY}" > /mnt/${ZPOOL_DIR}/root/.ssh/authorized_keys
 
 # Set root password
 echo "${PASSWORD_HASH}" | chroot /mnt/${ZPOOL_DIR} pw usermod root -H 0
@@ -118,7 +118,7 @@ ${SYSRC} syslogd_flags="-ss"
 } >> ${SYSCTL_CONF}
 
 # Create resolve.conf for pkg installation
-echo 'nameserver 9.9.9.9' >> /mnt/${ZPOOL_DIR}/etc/resolv.conf
+echo 'nameserver 1.1.1.1' >> /mnt/${ZPOOL_DIR}/etc/resolv.conf
 
 # pkg bootstrap
 if [ -z "${PKGNG}" ]; then

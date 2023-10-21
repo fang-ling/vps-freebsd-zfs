@@ -51,8 +51,8 @@ zpool set listsnapshots=on zroot
 zpool set autoreplace=on zroot
 zfs set checksum=fletcher4 zroot
 zfs set compression=lz4 zroot
-zfs set atime=off zroot
-zfs set copies=3 zroot
+#zfs set atime=off zroot
+#zfs set copies=3 zroot
 if [ $SIZE_SWAP -ne 0 ]; then
 zfs create -V ${SIZE_SWAP}G zroot/swap
 zfs set org.freebsd:swap=on zroot/swap

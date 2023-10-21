@@ -11,7 +11,7 @@ DISTRIBUTIONS="base.txz kernel.txz"; export DISTRIBUTIONS
 HOSTNAME="FreeBSD"
 PASSWORD="FreeBSD"
 # These ports are  installed by Vultr. If you want to add more just keep on adding
-PKGNG="ca_root_nss libnghttp2 libssh2 python wget"
+PKGNG=""
 SIZE_GB=10
 SIZE_SWAP=2         # Change size in GB. o to disable
 #SSH_KEY="<INSERT YOUR SSH KEY>"
@@ -118,16 +118,16 @@ ${SYSRC} syslogd_flags="-ss"
 } >> ${SYSCTL_CONF}
 
 # Create resolve.conf for pkg installation
-echo 'nameserver 1.1.1.1' >> /mnt/${ZPOOL_DIR}/etc/resolv.conf
+#echo 'nameserver 1.1.1.1' >> /mnt/${ZPOOL_DIR}/etc/resolv.conf
 
 # pkg bootstrap
-if [ -z "${PKGNG}" ]; then
-chroot /mnt/${ZPOOL_DIR} pkg bootstrap -y
-else
-pkg -c /mnt/${ZPOOL_DIR} install -y ${PKGNG}
-fi
+#if [ -z "${PKGNG}" ]; then
+#chroot /mnt/${ZPOOL_DIR} pkg bootstrap -y
+#else
+#pkg -c /mnt/${ZPOOL_DIR} install -y ${PKGNG}
+#fi
 # Delete resolve.conf after pkg installation
-rm /mnt/${ZPOOL_DIR}/etc/resolv.conf
+#rm /mnt/${ZPOOL_DIR}/etc/resolv.conf
 
 # Setup zfs booting
 ${SYSRC} zfs_enable="YES"
